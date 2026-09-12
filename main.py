@@ -7,7 +7,6 @@ st.title(
     "Cifrado y Descifrado Dinámico de César Y Atbash",
     text_alignment = "center",
 )
-# --- PUNTO 5% : ALFABETO / SÍMBOLOS PERSONALIZADOS ---
 
 st.space(size = "small")
 
@@ -33,7 +32,6 @@ else:
 
 st.space(size = "medium")
 
-# --- PESTAÑAS PRINCIPALES ---
 tab_cifrado, tab_descifrado = st.tabs([" Cifrado de Texto ", " Descifrado Automático"])
 
 with tab_cifrado:
@@ -94,7 +92,7 @@ with tab_descifrado:
             with res_col1:
                 st.markdown("###  Método y Módulo Detectados")
                 st.write(f"*Metodo de Cifrado Detectados: * {tipo_cifrado}")
-                if tipo_cifrado == 'César':
+                if tipo_cifrado == 'Cesar':
                     st.write(f"Desplazamiento:* {mejor_decifrado['desplazamiento']}")
 
             with res_col2:
