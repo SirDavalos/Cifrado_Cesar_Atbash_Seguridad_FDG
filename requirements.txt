@@ -1,6 +1,6 @@
-Instalar las siguientes librerias
-    Regex
-    Streamlit
+#Instalar las siguientes librerias
+#    Regex
+#    Streamlit
 
-Streamlit lo necesitas para poder ejecutar la pagina web en tu computadora
-Regex es necesario para una funcion de analisis de frecuencias
+#Streamlit lo necesitas para poder ejecutar la pagina web en tu computadora
+#Regex es necesario para una funcion de analisis de frecuencias
