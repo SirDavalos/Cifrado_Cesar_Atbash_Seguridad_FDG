@@ -103,8 +103,7 @@ with tab_descifrado:
         else:
             st.warning("Por favor ingresa un texto cifrado.")
 
-st.footer(
-    "# Creado por Fernando Davalos Gutierrez\n"
+with st.bottom:
+    st.text("# Creado por Fernando Davalos Gutierrez\n"
     "Ingenieria en Sistemas Computacionales "
-    "Universidad Autonoma de Aguascalienets"
-)
+    "Universidad Autonoma de Aguascalienets")
