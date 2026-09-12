@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+<<<<<<< HEAD
+=======
+    <mapping directory="$PROJECT_DIR$/../Cifrado_Cesar_Atbash_Seguridad" vcs="Git" />
+>>>>>>> 67e5dd6794e3ff1fd5843a16e0dc759dd467f234
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>
