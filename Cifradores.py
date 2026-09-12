@@ -1,20 +1,73 @@
-
-from operator import index
-
 #Diccionario que incluye las frecuencias de aparicion de las letras en lenguaje español
+import re
+import math
+from collections import Counter
+
+#Elementos globales que se usaran para el descifrado
 frecuencias_esp = {
-    'A' : 0.1172, 'Á' : 0.044, 'B' : 0.015, 'C' : 0.0387, 'D' : 0.0467, 'E' : 0.1372, 'É' : 0.0036 ,'F' : 0.0069, 'G' : 0.01,
-    'H' : 0.0118, 'I' : 0.0528, 'Í' : 0.007, 'J' : 0.0052, 'K' : 0.0011, 'L' : 0.0524, 'M' : 0.0308, 'N': 0.0683,
-    'Ñ' : 0.0017, 'O' : 0.0844, 'Ó' : 0.076, 'P' : 0.0289, 'Q' : 0.0111, 'R' : 0.0641, 'S' : 0.072, 'T' : 0.046,
-    'U' : 0.0455, 'Ü' : 0.0002, 'Ú' : 0.0012, 'V' : 0.0105, 'W' : 0.0004, 'X' : 0.0014, 'Y' : 0.0109, 'Z' : 0.0047
+    'A': 0.1218, 'B': 0.0142, 'C': 0.0468, 'D': 0.0586, 'E': 0.1325,
+    'F': 0.0069, 'G': 0.0101, 'H': 0.0070, 'I': 0.0553, 'J': 0.0044,
+    'K': 0.0002, 'L': 0.0497, 'M': 0.0315, 'N': 0.0671, 'Ñ': 0.0031,
+    'O': 0.0841, 'P': 0.0251, 'Q': 0.0088, 'R': 0.0687, 'S': 0.0798,
+    'T': 0.0463, 'U': 0.0393, 'V': 0.0090, 'W': 0.0001, 'X': 0.0022,
+    'Y': 0.0090, 'Z': 0.0052, 'Á': 0.0050, 'É': 0.0043, 'Í': 0.0073,
+    'Ó': 0.0083, 'Ú': 0.0017, 'Ü': 0.0001,
 }
 
-#cadena que se usara para el cifrado y descifrado
-def leer_cadenaCif():
-    return str(input("Ingrese cadena de cifrado: ")).upper()
+PALABRAS_ES = {
+    "DE", "LA", "EL", "EN", "QUE", "Y", "A", "LOS", "SE",
+    "DEL", "LAS", "UN", "POR", "CON", "NO", "UNA", "SU",
+    "PARA", "ES", "AL", "LO", "COMO", "MÁS", "PERO", "SUS",
+    "LE", "HA", "ME", "SI", "SIN", "SOBRE", "ESTE", "YA", "ENTRE",
+    "CUANDO", "TODO", "ESTA", "SER", "SON", "DOS", "TAMBIÉN",
+    "FUE", "HABÍA", "MUY", "AÑOS", "HASTA", "DESDE", "ESTÁ",
+    "MI", "PORQUE", "QUÉ", "CÓMO", "DÓNDE", "QUIEN", "QUIÉN",
+    "PUEDE", "HAY", "TIENE", "TENGO", "HOLA", "MUNDO", "MENSAJE",
+    "CASA", "TIEMPO" }
 
-#cifrado cesar
+PATRONES_ES = {
+    "QUE": 5,
+    "QUI": 3,
+    "GUE": 3,
+    "GUI": 3,
+    "CON": 4,
+    "DEL": 4,
+    "LOS": 3,
+    "LAS": 3,
+    "EST": 3,
+    "ENT": 3,
+    "ION": 2,
+    "CIÓN": 5,
+    "MENTE": 5,
+    "ADO": 2,
+    "IDO": 2,
+    "ANDO": 3,
+    "IENDO": 3,
+}
+
+#Cifrado Cesar
+#Funcion para cambiar las letras alphas a mayusculas
+def Mayusculas(texto):
+    resultados = []
+    for caracter in texto:
+        if caracter.isalpha():
+            mayus = caracter.upper()
+            if len(mayus) == 1:
+                resultados.append(mayus)
+            else:
+                resultados.append(caracter)
+        else:
+            resultados.append(caracter)
+
+    return "".join(resultados)
+
+def leer_cadenaCif():
+    return str(input("Ingrese cadena de cifrado: "))
+
 def cifrar_cesar(texto, alfabeto, cambio):
+
+    #Cambia el alfabeto a mayusculas
+    alfabeto = Mayusculas(alfabeto)
 
     #Conseguir la longitud del alfabeto para las operaciones
     longitud = len(alfabeto)
@@ -23,13 +76,12 @@ def cifrar_cesar(texto, alfabeto, cambio):
     texto_cif = ""
     #Cambiamos los caracteres de lugar
     for caracter in texto:
-
         if caracter in alfabeto:
 
             index = alfabeto.index(caracter)
 
             #Desplazamos el caracter
-            nuevo_indice = (index + cambio) % len(alfabeto)
+            nuevo_indice = (index + cambio) % longitud
 
             char_cambiado = alfabeto[nuevo_indice]
         else:
@@ -41,93 +93,135 @@ def cifrar_cesar(texto, alfabeto, cambio):
 
     return texto_cif #Cadena cifrada
 
-def imprimir_diccionario():
-    print(frecuencias_esp)
+#Descifrado Cesar
+def descifrar_cesar(texto_cif, alfabeto, desplazamiento):
 
-#Funcion para contar la frecuencia de aparicion
-def conseguir_frecuencias(texto, alfabeto):
-    #Se usara un diccionario para guardar la información
-    texto = texto.upper()
-    alfabeto = alfabeto.upper()
-    contador = {letra: 0 for letra in alfabeto}
-    total = 0
+    alfabeto = Mayusculas(alfabeto)
+    texto_decifrado = ""
+    for caracter in texto_cif:
+        if caracter in alfabeto:
+            numero = alfabeto.find(caracter)
+            numero = (numero - desplazamiento) % len(alfabeto)
 
-    for caracter in texto:
-        if caracter in contador:
-            contador[caracter] += 1
-            total +=1
+            if numero < 0:
+                numero = numero + len(alfabeto)
 
-    if total == 0:
-        return contador
-    #Retorna un diccionario con los valores
-    return {letra: (contador[letra] / total) for letra in alfabeto}
+            texto_decifrado += alfabeto[numero]
+        else:
+            texto_decifrado += caracter
 
-    diccionario_ord = sorted(diccionario.items(), key=operator.itemgetter(1), reverse=True)
-    return
-#Chi cuadrada, usado para facilitar la busqueda de frecuencias
-def chi_cuadrado(frecuencias_texto, frecuencias_referencia = frecuencias_esp):
-    total = 0
-    #Mientras mas bajo sea "total", mas probable es que sea el valor real
-    for letra, freq_esperada in frecuencias_referencia.items():
-        freq_obtenida = frecuencias_texto.get(letra, 0)
-        if freq_esperada > 0:
-            total += ((freq_obtenida - freq_esperada) ** 2) / freq_esperada
-    return total
+    return texto_decifrado
 
-#Desplazamiento
-def buscar_desplazamiento(texto_cif, alfabeto):
+#Funcion para verificar la probabilidad de cifrado correcta
+def conseguir_descifrado(texto_cif, alfabeto):
 
     n = len(alfabeto)
-    mejor_desplazamiento = 0
-    mejor_puntuacion = float('inf') #Valor infinito para poder comparar
-    puntuaciones = {}
-
+    resultados = []
     for desplazamiento in range(n):
-        frecuencia_texto = conseguir_frecuencias(texto_cif, alfabeto)
-        puntuacion_temp = chi_cuadrado(frecuencia_texto, frecuencias_esp) #Aqui se consigue el valor mas cercano
-        puntuaciones[desplazamiento] = puntuacion_temp
 
-        #Aqui se guardan los mejores valores, tanto de puntuacion como desplazamiento
-        if puntuacion_temp < mejor_puntuacion:
-            mejor_puntuacion = puntuacion_temp
-            mejor_desplazamiento = desplazamiento
+        texto_decifrado = descifrar_cesar(texto_cif, alfabeto, desplazamiento)
 
-    return mejor_desplazamiento
+        puntuacion = puntuacion_total(texto_decifrado, alfabeto)
 
-#Descifrado Cesar
-def descifrar_cesar(texto_cif, alfabeto):
+        resultados.append({
+            "desplazamiento": desplazamiento,
+            "texto": texto_decifrado,
+            "puntuacion": puntuacion
+        })
 
-    cambio = buscar_desplazamiento(texto_cif, alfabeto)
-    print("Cambio calculado: ", cambio)
-    tam = len(alfabeto)
-    indice = {letra: i for i, letra in enumerate(alfabeto)}
-    texto_decf = []
+    valor_maximo = max(resultados, key=lambda resultados: resultados["puntuacion"])
 
-    for caracter in texto_cif:
-        #Crear la cadena descifrada
-        if caracter in alfabeto:
-            posicion = (alfabeto[caracter] - cambio) % len(alfabeto) % tam
-            texto_decf.append(letras[posicion])
-        else:
-            texto_decf.append(caracter)
+    return valor_maximo
 
-    return "".join(texto_decf)
+def conseguir_char(texto):
+    return "".join(c for c in texto if c.isalpha())
 
-# cifrado atbash
+def puntuacion_frecuencias(texto, alfabeto):
 
-def cifrar_atbash(texto):
-    #Cambia el texto a mayusculas para poder ver el diccionario
-    #Crea un diccionario que relaciona una letra con la letra inversa inverso
-    diccionario = dict(zip(alfabeto, alfabeto[::-1]))
-    #alfabeto_inv = {'A': 'Z', 'B':'Y',..., 'Z' : 'A'}
-    texto = texto.upper()
-    texto_cif = ""
+    count = Counter(texto)
+    n = len(alfabeto) if texto else 1
+
+    puntuacion = 0
+
     for caracter in texto:
-        if caracter == ' ':
-            #Agrega espacios al texto cifrado
-            texto_cif += " "
+        if caracter.isalpha():
+            puntuacion += 5
+
+    for caracter, frecuencias_esperada in frecuencias_esp.items():
+
+        frecuencia_conseguida = (count.get(caracter, 0)) / n
+
+        diferencia = abs(frecuencia_conseguida - frecuencias_esperada)
+
+        puntuacion -= diferencia
+
+    return puntuacion
+
+def puntuacion_palabras(texto, alfabeto):
+
+    palabras = texto.split()
+
+    puntuacion = 0
+
+    for palabra_cruda in palabras:
+
+        palabra = re.sub(r"[^A-ZÁÉÍÓÚÜÑ]", "", palabra_cruda)
+
+        if palabra in PALABRAS_ES:
+            #Mientras mas larga la palabra, mas peso tiene
+            puntuacion += 10 + len(palabra)
+
+    return puntuacion
+
+def puntuacion_patrones(texto, alfabeto):
+    puntuacion = 0
+
+    for patron, peso in PATRONES_ES.items():
+        puntuacion += texto.count(patron) * peso
+
+    return puntuacion
+
+def puntuacion_total(texto, alfabeto):
+
+    return puntuacion_frecuencias(texto, alfabeto) + puntuacion_palabras(texto, alfabeto) + puntuacion_patrones(texto, alfabeto)
+
+#Cifrado Atbash
+
+def cifrar_atbash(texto, alfabeto):
+    #Cambia el texto a mayusculas para poder ver el diccionario
+    texto = Mayusculas(texto)
+    alfabeto = Mayusculas(alfabeto)
+    n = len(alfabeto)
+    texto_cif = ""
+    #Invertir la posicion paras el cifrado
+    for caracter in texto:
+        if caracter in alfabeto:
+            #Obtener la posicion inicial y opuesta
+            indice = alfabeto.index(caracter)
+            nuevo_indice = n - indice -1
+            texto_cif += alfabeto[nuevo_indice]
         else:
             #Busca su valor en el diccionario
-            texto_cif += diccionario[caracter]
+            texto_cif += caracter
 
+    #Texto invertido
     return texto_cif
+
+#Comprobar si la cadena es Cifrado Atbash
+def probar_atbash(texto_cif, alfabeto, valor_cesar):
+
+    alfabeto= Mayusculas(alfabeto)
+
+    n = len(alfabeto)
+    resultados = []
+
+    #Cifrar_atbash se puede usar como decifrado
+    texto_decifrado = cifrar_atbash(texto_cif, alfabeto)
+
+    puntuacion = puntuacion_total(texto_decifrado, alfabeto)
+
+    if puntuacion > valor_cesar["puntuacion"]:
+        return True
+
+    #Si no retorna el if, entonces la funcion retornas falso
+    return False
