@@ -102,3 +102,9 @@ with tab_descifrado:
                 st.code(mensaje_descifrado)
         else:
             st.warning("Por favor ingresa un texto cifrado.")
+
+st.footer(
+    "# Creado por Fernando Davalos Gutierrez\n"
+    "Ingenieria en Sistemas Computacionales "
+    "Universidad Autonoma de Aguascalienets"
+)
