@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f4f3b09-89ee-4cf0-a7d8-b7ac6d55c44d" name="Changes" comment="Funciones completa de cifrado y Descifrado. Creacion de una Pagina Web basica" />
+    <list default="true" id="3f4f3b09-89ee-4cf0-a7d8-b7ac6d55c44d" name="Changes" comment="Funciones completa de cifrado y Descifrado. Creacion de una Pagina Web basica">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cifradores.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cifradores.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,63 +25,75 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SirDavalos&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SirDavalos/Cifrado_Cesar_Atbash_Seguridad_FDG.git&quot;,
+    &quot;accountId&quot;: &quot;acd5c68c-77d7-48ee-819c-17c8bc11e148&quot;
+  }
+}</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.2388220621335382" />
-      <entry key="MS500" value="2.210879968052638" />
-      <entry key="S2" value="3.137923239706408" />
-      <entry key="S5" value="4.398872036363932" />
-      <entry key="S10" value="5.382708691293642" />
-      <entry key="S30" value="7.305837248807936" />
-      <entry key="S60" value="12.234557969496754" />
-      <entry key="M2" value="26.22331559924207" />
-      <entry key="M5" value="73.5023752076026" />
-      <entry key="M10" value="137.70380186206998" />
-      <entry key="M15" value="187.805265224936" />
-      <entry key="M30" value="286.5970612262192" />
-      <entry key="H1" value="377.6843949430322" />
-      <entry key="H2" value="443.2848442926571" />
-      <entry key="H4" value="483.47511419418436" />
-      <entry key="D1" value="521.7494236761413" />
-      <entry key="W1" value="528.808352220616" />
+      <entry key="MS100" value="1.8651361521091804E-10" />
+      <entry key="MS500" value="0.01132770963186603" />
+      <entry key="S2" value="0.3262387369222394" />
+      <entry key="S5" value="0.6388725239679075" />
+      <entry key="S10" value="0.7992950168541733" />
+      <entry key="S30" value="0.928107651593307" />
+      <entry key="S60" value="0.9991787258742056" />
+      <entry key="M2" value="2.4005735447293737" />
+      <entry key="M5" value="23.88160954417482" />
+      <entry key="M10" value="77.84012413793589" />
+      <entry key="M15" value="128.29404152605085" />
+      <entry key="M30" value="236.95209628169872" />
+      <entry key="H1" value="343.693171751621" />
+      <entry key="H2" value="423.2514624606219" />
+      <entry key="H4" value="472.8655603956383" />
+      <entry key="D1" value="520.6401182682819" />
+      <entry key="W1" value="529.5024156730759" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="8.611699623663693E-274" />
-      <entry key="S5" value="5.943408065413797E-110" />
-      <entry key="S10" value="2.4379105942208864E-55" />
-      <entry key="S30" value="6.247302157731224E-19" />
-      <entry key="S60" value="7.9749855444072E-10" />
-      <entry key="M2" value="3.189206489247806E-5" />
-      <entry key="M5" value="0.02710159402461588" />
-      <entry key="M10" value="0.324948242926416" />
-      <entry key="M15" value="0.7961328509951774" />
-      <entry key="M30" value="2.2507209692113253" />
-      <entry key="H1" value="4.465919648047246" />
-      <entry key="H2" value="6.795157783051913" />
-      <entry key="H4" value="8.5773107200746" />
-      <entry key="D1" value="10.541650142419458" />
-      <entry key="W1" value="10.93302874261046" />
+      <entry key="MS100" value="1.0005417819687832" />
+      <entry key="MS500" value="1.2222106702916427" />
+      <entry key="S2" value="1.6865801249374466" />
+      <entry key="S5" value="1.8603526306114397" />
+      <entry key="S10" value="1.9275519557477305" />
+      <entry key="S30" value="1.975242790554531" />
+      <entry key="S60" value="1.987543817032512" />
+      <entry key="M2" value="1.993754118045847" />
+      <entry key="M5" value="2.005935844707297" />
+      <entry key="M10" value="2.18008056800772" />
+      <entry key="M15" value="2.538792550025823" />
+      <entry key="M30" value="3.852584980658201" />
+      <entry key="H1" value="6.051965278657007" />
+      <entry key="H2" value="8.472635286858187" />
+      <entry key="H4" value="10.371296671594417" />
+      <entry key="D1" value="12.499024646658404" />
+      <entry key="W1" value="12.926702386141933" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.1586574843059054" />
-      <entry key="MS500" value="2.1824519160449927" />
-      <entry key="S2" value="3.1275129912477477" />
-      <entry key="S5" value="4.3928603034850235" />
-      <entry key="S10" value="5.378997558119646" />
-      <entry key="S30" value="7.304167175138844" />
-      <entry key="S60" value="12.233240949339175" />
-      <entry key="M2" value="26.222035455495057" />
-      <entry key="M5" value="73.5271583797438" />
-      <entry key="M10" value="138.02342968986102" />
-      <entry key="M15" value="188.59444562012067" />
-      <entry key="M30" value="288.84021891263427" />
-      <entry key="H1" value="382.1442469839625" />
-      <entry key="H2" value="450.07598532093283" />
-      <entry key="H4" value="492.05007636344845" />
-      <entry key="D1" value="532.290623454751" />
-      <entry key="W1" value="539.7413149953088" />
+      <entry key="MS100" value="0.006615198114579644" />
+      <entry key="MS500" value="0.38904415471980225" />
+      <entry key="S2" value="1.4295466441946796" />
+      <entry key="S5" value="2.1814532060003704" />
+      <entry key="S10" value="2.549146114488071" />
+      <entry key="S30" value="2.8393708588953195" />
+      <entry key="S60" value="2.954096539899085" />
+      <entry key="M2" value="4.377784409109033" />
+      <entry key="M5" value="25.88019543265699" />
+      <entry key="M10" value="80.01391517468863" />
+      <entry key="M15" value="130.82590647116945" />
+      <entry key="M30" value="240.79734615953996" />
+      <entry key="H1" value="349.7390772219244" />
+      <entry key="H2" value="431.71999436728566" />
+      <entry key="H4" value="483.23442629274126" />
+      <entry key="D1" value="533.13867126723" />
+      <entry key="W1" value="542.4290488287704" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -93,11 +110,14 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "dev",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/ferna/PycharmProjects/Cifrado_Cesar_Atbash_Seguridad",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -216,44 +236,6 @@
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="docs" factoryName="Docutils task">
-      <module name="Cifrado_Cesar_Atbash_Seguridad" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="false" />
-      <option name="RUN_TOOL" value="" />
-      <option name="docutils_input_file" value="" />
-      <option name="docutils_output_file" value="" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="docs" factoryName="Sphinx task">
-      <module name="Cifrado_Cesar_Atbash_Seguridad" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="false" />
-      <option name="RUN_TOOL" value="" />
-      <option name="docutils_input_file" value="" />
-      <option name="docutils_output_file" value="" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="" />
-      <option name="docutils_open_in_browser" value="false" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="tests" factoryName="Autodetect">

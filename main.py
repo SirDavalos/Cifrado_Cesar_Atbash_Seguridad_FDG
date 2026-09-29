@@ -91,7 +91,7 @@ with tab_descifrado:
 
             with res_col1:
                 st.markdown("###  Método y Módulo Detectados")
-                st.write(f"*Metodo de Cifrado Detectados: * {tipo_cifrado}")
+                st.write(f"Metodo de Cifrado Detectados: {tipo_cifrado}")
                 if tipo_cifrado == 'Cesar':
                     st.write(f"Desplazamiento:* {mejor_decifrado['desplazamiento']}")
 

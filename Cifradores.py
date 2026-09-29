@@ -1,5 +1,6 @@
 import re
 import math
+import unicodedata
 from collections import Counter
 
 #1
@@ -44,10 +45,24 @@ PATRONES_ES = {
     "IENDO": 3,
 }
 
+def extraer_caracteres(texto):
+    grafemas = []
+    actual = ""
+    for ch in texto:
+        if unicodedata.combining(ch) or ch in ("\u200d", "\ufe0f"):
+            actual += ch
+        else:
+            if actual:
+                grafemas.append(actual)
+            actual = ch
+    if actual:
+        grafemas.append(actual)
+    return grafemas
+
 #1.1
 def Mayusculas(texto):
     resultados = []
-    for caracter in texto:
+    for caracter in extraer_caracteres(texto):
         if caracter.isalpha():
             mayus = caracter.upper()
             if len(mayus) == 1:
@@ -59,60 +74,94 @@ def Mayusculas(texto):
 
     return "".join(resultados)
 
+#1.2
+def preparar_alfabeto(alfabeto):
+
+    grafemas = extraer_caracteres(alfabeto)
+    indice = {grafema: i for i, grafema in enumerate(grafemas)}
+    return grafemas, indice
+
 #2
 def cifrar_cesar(texto, alfabeto, cambio):
 
-    #2.1
-    alfabeto = Mayusculas(alfabeto)
+    grafemas_alfabeto, indice_alfabeto = preparar_alfabeto(alfabeto)
 
     #2.2
-    longitud = len(alfabeto)
-    #2.3
-    texto = texto.upper()
-    texto_cif = ""
+    longitud = len(grafemas_alfabeto)
+    resultado = []
     #2.4
-    for caracter in texto:
-        if caracter in alfabeto:
+    for caracter in extraer_caracteres(texto):
 
-            index = alfabeto.index(caracter)
+        if caracter in indice_alfabeto:
+            index = indice_alfabeto[caracter]
+            nuevo_indice = (index + cambio) % longitud
+            char_cambiado = grafemas_alfabeto[nuevo_indice]
+
+        elif caracter.isalpha() and Mayusculas(caracter) in indice_alfabeto:
+            es_minuscula = caracter.islower()
+            clave = Mayusculas(caracter)
+            index = indice_alfabeto[clave]
 
             #2.4.1
             nuevo_indice = (index + cambio) % longitud
+            char_cambiado = grafemas_alfabeto[nuevo_indice]
 
-            char_cambiado = alfabeto[nuevo_indice]
+            if es_minuscula:
+                char_cambiado = char_cambiado.lower()
         else:
             #2.4.2
             char_cambiado = caracter
 
         #2.5
-        texto_cif += char_cambiado
+        resultado.append(char_cambiado)
 
-    return texto_cif #Cadena cifrada
+    return "".join(resultado)
 
 #3
 def descifrar_cesar(texto_cif, alfabeto, desplazamiento):
 
-    alfabeto = Mayusculas(alfabeto)
-    texto_decifrado = ""
+    grafemas_alfabeto, indice_alfabeto = preparar_alfabeto(alfabeto)
+    n = len(grafemas_alfabeto)
+    resultado = []
     #3.1
-    for caracter in texto_cif:
-        if caracter in alfabeto:
-            numero = alfabeto.find(caracter)
-            numero = (numero - desplazamiento) % len(alfabeto)
+
+    for caracter in extraer_caracteres(texto_cif):
+
+        if caracter in indice_alfabeto:
+
+            numero = indice_alfabeto[caracter]
+            numero = (numero - desplazamiento) % n
 
             if numero < 0:
-                numero = numero + len(alfabeto)
+                numero = numero + n
 
-            texto_decifrado += alfabeto[numero]
+            resultado.append(grafemas_alfabeto[numero])
+
+        elif caracter.isalpha() and Mayusculas(caracter) in indice_alfabeto:
+            es_minuscula = caracter.islower()
+            clave = Mayusculas(caracter)
+            numero = indice_alfabeto[clave]
+            numero = (numero - desplazamiento) % n
+
+            if numero < 0:
+                numero = numero + n
+
+            letra_descifrada = grafemas_alfabeto[numero]
+
+            if es_minuscula:
+                letra_descifrada = letra_descifrada.lower()
+
+            resultado.append(letra_descifrada)
         else:
-            texto_decifrado += caracter
+            resultado.append(caracter)
 
-    return texto_decifrado
+    return "".join(resultado)
 
 #4
 def conseguir_descifrado(texto_cif, alfabeto):
 
-    n = len(alfabeto) #4.1
+    grafemas_alfabeto, _ = preparar_alfabeto(alfabeto)
+    n = len(grafemas_alfabeto) #4.1
     resultados = []
     #4.2
     for desplazamiento in range(n):
@@ -137,7 +186,7 @@ def conseguir_descifrado(texto_cif, alfabeto):
 def puntuacion_frecuencias(texto, alfabeto):
 
     count = Counter(texto)
-    n = len(alfabeto) if texto else 1
+    n = len(extraer_caracteres(alfabeto)) if texto else 1
 
     puntuacion = 0
 
@@ -186,29 +235,45 @@ def puntuacion_patrones(texto, alfabeto):
 #7.1
 def puntuacion_total(texto, alfabeto):
 
-    return puntuacion_frecuencias(texto, alfabeto) + puntuacion_palabras(texto, alfabeto) + puntuacion_patrones(texto, alfabeto)
+    texto_normalizado = Mayusculas(texto)
+
+    return (puntuacion_frecuencias(texto_normalizado, alfabeto)
+            + puntuacion_palabras(texto_normalizado, alfabeto)
+            + puntuacion_patrones(texto_normalizado, alfabeto))
 
 #8
 
 def cifrar_atbash(texto, alfabeto):
     #8.1
-    texto = Mayusculas(texto)
-    alfabeto = Mayusculas(alfabeto)
-    n = len(alfabeto)
-    texto_cif = ""
+    grafemas_alfabeto, indice_alfabeto = preparar_alfabeto(alfabeto)
+    n = len(grafemas_alfabeto)
+    resultado = []
     #8.2
-    for caracter in texto:
-        if caracter in alfabeto:
+    for caracter in extraer_caracteres(texto):
+
+        if caracter in indice_alfabeto:
             #8.3
-            indice = alfabeto.index(caracter)
-            nuevo_indice = n - indice -1
-            texto_cif += alfabeto[nuevo_indice]
+            indice = indice_alfabeto[caracter]
+            nuevo_indice = n - indice - 1
+            resultado.append(grafemas_alfabeto[nuevo_indice])
+
+        elif caracter.isalpha() and Mayusculas(caracter) in indice_alfabeto:
+            es_minuscula = caracter.islower()
+            clave = Mayusculas(caracter)
+            indice = indice_alfabeto[clave]
+            nuevo_indice = n - indice - 1
+            char_cambiado = grafemas_alfabeto[nuevo_indice]
+
+            if es_minuscula:
+                char_cambiado = char_cambiado.lower()
+
+            resultado.append(char_cambiado)
         else:
             #8.4
-            texto_cif += caracter
+            resultado.append(caracter)
 
     #8.5
-    return texto_cif
+    return "".join(resultado)
 
 #9
 def probar_atbash(texto_cif, alfabeto, valor_cesar):
